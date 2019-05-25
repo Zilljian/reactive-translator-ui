@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: reactive-client
+server:
+  port: 9090
+yandex:
+  credentials:
+    api-key: trnsl.1.1.20190506T084121Z.c0a9b17b34b940a9.28a35653dd893126667fe8bdbea184a3c4c40c2b
+    ui: en
+    url: https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=
+kafka:
+  url: kafka01-dev.integration.local:9092
+  groupId: group1
+  topic: reactive-response
