@@ -14,5 +14,5 @@ public class TranslationResponse {
     private int code;
     private String lang;
     private List<String> text;
-    private LocalDateTime created;
+    private LocalDateTime emitted;
 }

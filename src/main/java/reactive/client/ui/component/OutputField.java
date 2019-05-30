@@ -1,6 +1,6 @@
 package reactive.client.ui.component;
 
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.spring.annotation.UIScope;
@@ -14,9 +14,8 @@ import javax.annotation.PostConstruct;
 @UIScope
 @Component
 @RequiredArgsConstructor
-public class OutputField {
+public class OutputField extends HorizontalLayout {
 
-    private final Div div = new Div();
     private final TextArea field = new TextArea();
 
     @PostConstruct
@@ -26,8 +25,9 @@ public class OutputField {
         field.setWidth("48vw");
         field.setHeight("35vh");
         field.setReadOnly(true);
+    }
 
-        div.setId("Translated text");
-        div.setVisible(true);
+    public void setValue(String text) {
+        field.setValue(text);
     }
 }

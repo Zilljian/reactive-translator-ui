@@ -12,5 +12,5 @@ import java.time.LocalDateTime;
 public class UIEvent {
     private String language;
     private String text;
-    private LocalDateTime created;
+    private LocalDateTime emitted;
 }

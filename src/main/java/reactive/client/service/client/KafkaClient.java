@@ -5,25 +5,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import reactive.client.dto.operation.UIEvent;
+import reactor.core.publisher.UnicastProcessor;
+
+import javax.annotation.PostConstruct;
 
 @Slf4j
 @UIScope
 @Component
-@EnableKafka
 @RequiredArgsConstructor
 public class KafkaClient {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
+    private final UnicastProcessor<UIEvent> event;
 
-    public void sendEvent(UIEvent event) {
-        try {
-            kafkaTemplate.send("reactive-ui-event", mapper.writeValueAsString(event));
-        } catch (JsonProcessingException e) {
-            log.error("Error while serializing UIEvent");
-        }
+    @PostConstruct
+    public void sendEvent() {
+        event.subscribe(
+                eve -> {
+                    try {
+                        kafkaTemplate.send("reactive-ui-event", mapper.writeValueAsString(eve));
+                    } catch (JsonProcessingException e) {
+                        log.error("Error while serializing UIEvent");
+                    }
+                });
     }
 }
